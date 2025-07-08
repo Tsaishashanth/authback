@@ -11,7 +11,7 @@ router.post('/signup', async (req, res) => {
     if(error) return res.status(400).json({error: error.message, success:false});
 
   
-    res.json({message: 'User signed up', user:data.user, acessToken: data.sessions?.acess_token,success:true});
+    res.json({message: 'User signed up', user:data.user, accessToken: data.session?.access_token,success:true});
 });
 
 //login in
@@ -19,9 +19,9 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-  if (error) return res.status(400).json({ error: error.message,sucess: true });
+  if (error) return res.status(400).json({ error: error.message,success: false });
 
-  res.json({ message: 'Login successful',acessToken: data.session?.acess_token, user: data.user });
+  res.json({ message: 'Login successful',accessToken: data.session?.access_token, user: data.user,success:true});
 });
 
 //token generation
