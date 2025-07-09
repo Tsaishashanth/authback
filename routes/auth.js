@@ -69,7 +69,7 @@ router.put('/updateuser', async (req,res) => {
 
 //logout
 
-router.delete('/logout', async(req,res) =>{
+router.post('/logout', async(req,res) =>{
 
   const token = req.headers.authorization?.split(' ')[1];
 
