@@ -46,7 +46,7 @@ module.exports = router;
 
 //updateuser
 
-router.put('/updateemail', async (req,res) => {
+router.put('/updateuser', async (req,res) => {
   const token = req.headers.authorization?.split(' ')[1];
 
   const {newemail, newpassword } = req.body;
