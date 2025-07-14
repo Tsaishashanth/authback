@@ -51,8 +51,10 @@ module.exports = router;
 
 router.put('/updateuser', async (req,res) => {
   const token = req.headers.authorization?.split(' ')[1];
+  // email should be the same and password should be different
 
-  const {newemail, newpassword } = req.body;  
+
+  const {newpassword } = req.body;  
 
   if(!token) return res.status(401).json({error: 'no token provided'});
 
@@ -62,7 +64,7 @@ router.put('/updateuser', async (req,res) => {
   await supabase.auth.setSession({ access_token: token });
 
   const updatedata = {};
-  if(newemail) updatedata.email = newemail;
+  // if(newemail) updatedata.email = newemail;
   if(newpassword) updatedata.password = newpassword;
 
 
@@ -81,7 +83,6 @@ router.post('/logout', async(req,res) =>{
   const token = req.headers.authorization?.split(' ')[1];
 
   if(!token) return res.status(401).json({error: 'no token provided'});
-
 
   const{error} = await supabase.auth.signOut();
   if(error)
