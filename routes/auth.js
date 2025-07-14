@@ -49,11 +49,16 @@ router.post('/login', async (req, res) => {
   if(loginError) return res.status(400).json({error: "invalid credentials"});
 
   try{
-    const{ data: {user}, error} = await supabase.auth.getUser(token);
+    const{ data, error} = await supabase.auth.getUser(token);
 
     if(error) return res.status(401).json({error: error.message});
 
-    res.json({user});
+    res.json({
+      message:'user details',
+      email:email,
+      acessToken:data.session?.access_token,
+      success:true
+    });
   }
   catch (err) {
     res.status(500).json({error: err.message});
@@ -100,7 +105,12 @@ router.put('/updateuser', async (req,res) => {
   const {data, error} = await supabase.auth.admin.updateUserById(user.id, updatedata);
   if(error) return res.status(400).json({error: error.message});
 
-  res.json({message: 'User updated succesfully', user:data.user});
+  res.json({
+    message: 'User updated succesfully',
+    email: email,
+    acessToken: data.session?.access_token,
+    success:true
+  });
 });
 
 
