@@ -11,18 +11,26 @@ router.post('/signup', async (req, res) => {
 
     if(error) return res.status(400).json({error: error.message, success:false});
 
-    res.json({message: 'User signed up', user:{id:user.id,email:email}, accessToken: data.session?.access_token,success:true});
+    res.json({
+      message: 'User signed up',
+      user:{email:email},
+      accessToken: data.session?.access_token,
+      success:true});
 });
 
 
 //login in
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });  
 
   if (error) return res.status(400).json({ error: error.message,success: false });
 
-  res.json({ message: 'Login successful',user:{id:user.id, email:email},accessToken: data.session?.access_token, success:true});
+  res.json({ 
+    message: 'Login successful',
+    user:{email:email},
+    accessToken: data.session?.access_token, 
+    success:true});
 });
 
 
