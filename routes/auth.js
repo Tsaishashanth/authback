@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
     res.json({
       message:'user details',
       email:email,
-      acessToken:data.session?.access_token,
+      accessToken:token,
       success:true
     });
   }
@@ -108,7 +108,7 @@ router.put('/updateuser', async (req,res) => {
   res.json({
     message: 'User updated succesfully',
     email: email,
-    acessToken: data.session?.access_token,
+    accessToken: token,
     success:true
   });
 });
