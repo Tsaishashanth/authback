@@ -54,7 +54,7 @@ router.put('/updateuser', async (req,res) => {
   // email should be the same and password should be different
 
 
-  const {newpassword } = req.body;  
+  const {email,newpassword } = req.body;  
 
   if(!token) return res.status(401).json({error: 'no token provided'});
 
@@ -64,7 +64,7 @@ router.put('/updateuser', async (req,res) => {
   await supabase.auth.setSession({ access_token: token });
 
   const updatedata = {};
-  // if(newemail) updatedata.email = newemail;
+  if(email) updatedata.email = email;
   if(newpassword) updatedata.password = newpassword;
 
 
