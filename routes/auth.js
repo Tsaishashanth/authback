@@ -27,7 +27,7 @@ router.post('/login', async (req, res) => {
 
 
 //user details
- router.post('/user', async (req,res) => {
+ router.post('/userdetails', async (req,res) => {
   const token = req.headers.authorization?.split(' ')[1]; 
 
   if(!token) return res.status(401).json({error: 'token unavailable',message: 'unauthorized'});
