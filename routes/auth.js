@@ -98,7 +98,7 @@ router.put('/updateuser', async (req,res) => {
   // await supabase.auth.setSession({ access_token: token }); no need this because we are already using admin 
 
   const updatedata = {};
-  if(email) updatedata.email = email;
+  // if(email) updatedata.email = email;
   if(newpassword) updatedata.password = newpassword;
 
 
