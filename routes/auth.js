@@ -6,14 +6,17 @@ const supabase = require('../supabase')
 
 //sign up
 router.post('/signup', async (req, res) => {
-    const {email, password} = req.body;
+    const {email, password, username} = req.body;
     const{data,error} = await supabase.auth.signUp({email, password});
 
     if(error) return res.status(400).json({error: error.message, success:false});
 
     res.json({
       message: 'User signed up',
-      user:{email:email},
+      user:{
+        email:email,
+        username: username
+      },
       accessToken: data.session?.access_token,
       success:true});
 });
@@ -44,7 +47,8 @@ router.post('/login', async (req, res) => {
 
   const{data, error:loginError} = await supabase.auth.signInWithPassword({
     email,
-    password
+    password,
+
   });
   if(loginError) return res.status(400).json({error: "invalid credentials"});
 
@@ -55,6 +59,7 @@ router.post('/login', async (req, res) => {
 
     res.json({
       message:'user details',
+      username:username,
       email:email,
       accessToken:token,
       success:true
