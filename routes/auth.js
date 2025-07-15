@@ -52,7 +52,7 @@ router.post('/login', async (req, res) => {
 
   if(!token) return res.status(401).json({error: 'token unavailable',message: 'unauthorized'});
 
-  const{email, password} = req.body;
+  // const{email, password} = req.body; we cannot use this for get route
 
   
 
@@ -62,6 +62,9 @@ router.post('/login', async (req, res) => {
     const{ data, error} = await supabase.auth.getUser(token);
 
     if(error) return res.status(401).json({error: error.message});
+
+    const username = data.user.user_metadata.username;
+    const email = data.user.email;
 
     res.json({
       message:'user details',
