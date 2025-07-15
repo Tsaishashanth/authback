@@ -135,12 +135,12 @@ router.put('/updateuser', async (req,res) => {
     msg = 'username updated succesfully';
   }
   else if(newpassword) {
-    msg = 'password updated succesfully'
+    msg = 'password updated succesfully';
   }
 
   res.json({
     message: msg ,
-    username:username,
+    username:newusername,
     email: email,
     accessToken: token,
     success:true
