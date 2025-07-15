@@ -119,15 +119,27 @@ router.put('/updateuser', async (req,res) => {
   // if(email) updatedata.email = email;
   if(newpassword) updatedata.password = newpassword;
   if(newusername){
-    upadatedata.data = {username: newusername};
+    updatedata.data = {username: newusername};
   }
 
 
   const {data, error} = await supabase.auth.admin.updateUserById(user.id, updatedata);
   if(error) return res.status(400).json({error: error.message});
 
+  let msg = "No changes provided"
+
+  if(newusername && newpassword) {
+    msg = 'username and password updated succesfully';
+  }
+  else if(newusername) {
+    msg = 'username updated succesfully';
+  }
+  else if(newpassword) {
+    msg = 'password updated succesfully'
+  }
+
   res.json({
-    message: 'User updated succesfully',
+    message: msg ,
     username:username,
     email: email,
     accessToken: token,
