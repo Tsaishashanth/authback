@@ -54,9 +54,6 @@ router.post('/login', async (req, res) => {
 
   // const{email, password} = req.body; we cannot use this for get route
 
-  
-
-  const username = data.user.user_metadata.username;
 
   try{
     const{ data, error} = await supabase.auth.getUser(token);
@@ -103,7 +100,7 @@ router.put('/updateuser', async (req,res) => {
   const {data : {user}, error: userError} = await supabase.auth.getUser(token);
   if(userError) return res.status(401).json({error: userError.message});
 
-  const username = data.user_metadata.username;
+  const username = user.user_metadata.username;
 
 
   const{data:sessionData, error:signInError} = await supabase.auth.signInWithPassword({
