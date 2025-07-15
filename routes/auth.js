@@ -7,16 +7,22 @@ const supabase = require('../supabase')
 //sign up
 router.post('/signup', async (req, res) => {
     const {email, password, username} = req.body;
-    const{data,error} = await supabase.auth.signUp({email, password});
+    const{data,error} = await supabase.auth.signUp({
+      email,
+      password,
+      options:{
+        data: {
+          username:username
+        }
+      }
+    });
 
     if(error) return res.status(400).json({error: error.message, success:false});
 
     res.json({
       message: 'User signed up',
-      user:{
-        email:email,
-        username: username
-      },
+      username: username,
+      email:email,
       accessToken: data.session?.access_token,
       success:true});
 });
@@ -27,30 +33,30 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });  
 
+  const username = data.user.user_metadata.username;
+
   if (error) return res.status(400).json({ error: error.message,success: false });
 
   res.json({ 
     message: 'Login successful',
-    user:{email:email},
+    username:username,
+    email:email,
     accessToken: data.session?.access_token, 
     success:true});
 });
 
 
 //user details
- router.post('/userdetails', async (req,res) => {
+ router.get('/userdetails', async (req,res) => {
   const token = req.headers.authorization?.split(' ')[1]; 
 
   if(!token) return res.status(401).json({error: 'token unavailable',message: 'unauthorized'});
 
   const{email, password} = req.body;
 
-  const{data, error:loginError} = await supabase.auth.signInWithPassword({
-    email,
-    password,
+  
 
-  });
-  if(loginError) return res.status(400).json({error: "invalid credentials"});
+  const username = data.user.user_metadata.username;
 
   try{
     const{ data, error} = await supabase.auth.getUser(token);
@@ -85,7 +91,7 @@ router.put('/updateuser', async (req,res) => {
   // email should be the same and password should be different
 
 
-  const {email,newpassword, oldpassword } = req.body;  
+  const {email,newpassword, oldpassword,newusername} = req.body;  
 
   // pass old password if not send error
 
@@ -93,6 +99,9 @@ router.put('/updateuser', async (req,res) => {
 
   const {data : {user}, error: userError} = await supabase.auth.getUser(token);
   if(userError) return res.status(401).json({error: userError.message});
+
+  const username = data.user_metadata.username;
+
 
   const{data:sessionData, error:signInError} = await supabase.auth.signInWithPassword({
     email:user.email,
@@ -109,6 +118,9 @@ router.put('/updateuser', async (req,res) => {
   const updatedata = {};
   // if(email) updatedata.email = email;
   if(newpassword) updatedata.password = newpassword;
+  if(newusername){
+    upadatedata.data = {username: newusername};
+  }
 
 
   const {data, error} = await supabase.auth.admin.updateUserById(user.id, updatedata);
@@ -116,6 +128,7 @@ router.put('/updateuser', async (req,res) => {
 
   res.json({
     message: 'User updated succesfully',
+    username:username,
     email: email,
     accessToken: token,
     success:true
