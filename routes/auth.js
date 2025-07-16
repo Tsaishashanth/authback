@@ -10,7 +10,7 @@ router.post('/signup', async (req, res) => {
     const{data,error} = await supabase.auth.signUp({
       email,
       password,
-      options:{
+      options:{ 
         data: {
           username:username
         }
@@ -33,9 +33,10 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });  
 
-  const username = data.user.user_metadata.username;
+  // const username = data.user.user_metadata.username;
 
-  if (error) return res.status(400).json({ error: error.message,success: false });
+  if (error) return res.status(400).json({ error: error.message,messsage: 'invalid email or password',success: false });
+  const username = data.user.user_metadata.username;
 
   res.json({ 
     message: 'Login successful',
