@@ -2,26 +2,25 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
-
-
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const userRoutes = require('./routes/users');
+const cartRoutes = require('./routes/cartproducts');
 
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+ 
 app.use('/api/auth', authRoutes);
-app.use('/api/user', authRoutes);
-app.use('/api/products', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/products', productRoutes);
+app.use('./api/cartproducts', cartRoutes );
 
 //starting the server
 app.get('/', (req, res) => {
   res.send('Server is running!');
 });
-
 
 
 const PORT = process.env.PORT || 5000;
