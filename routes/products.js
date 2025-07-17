@@ -43,6 +43,7 @@ router.post('/createproduct',async(req,res) => {
     if(userError) {
         return res.status(401).json({
             message: 'invalid user',
+            error: userError.message,
             success:false
         })
     }
@@ -62,6 +63,7 @@ router.post('/createproduct',async(req,res) => {
     if(tableerror){
         return res.status(500).json({
             message: 'invalid details',
+            error: tableerror.message,
             success:false
         });
     }
@@ -93,6 +95,7 @@ router.put('/updateproduct', async (req, res) => {
   if (authError) {
     return res.status(400).json({
       message: 'Invalid user',
+      error: authError.message,
       success: false
     });
   }
@@ -148,6 +151,7 @@ router.get('/productsbycategory', async(req, res) =>{
     if(productsError){
         return res.status(400).json({
             message:'unsuccesfull',
+            error: productError.message,
             success:false
         });
     }
@@ -178,6 +182,7 @@ router.delete('/deleteproduct', async(req, res) => {
     if(error){
         return res.status(400).json({
             message: 'unsuccessfull deletion',
+            error: error.message,
             success:false
         });
     }

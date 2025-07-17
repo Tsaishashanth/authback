@@ -21,6 +21,7 @@ router.post('/addtocart', async(req,res) => {
     if(checkingerror) {
         return res.status(400).json({
             messsage: 'product not found',
+            error: checkingerror.message,
             success: false
         });
     }
@@ -34,6 +35,7 @@ router.post('/addtocart', async(req,res) => {
     if(cartError){
         return res.status(400).json({
             message: 'error adding to cart',
+            error:carterror.message,
             success:false
         });
     }
@@ -63,6 +65,7 @@ router.delete('/deletefromcart', async(req,res) => {
     if(deleteError) {
         return res.status(400).json({
             message: 'error deleting product from cart',
+            error: deleteError.message,
             success:false
         });
     }

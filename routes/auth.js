@@ -110,7 +110,9 @@ router.put('/updateuser', async (req,res) => {
   });
 
   if (signInError) {
-    return res.status(401).json({error: "old password is incorrect"
+    return res.status(401).json({
+      message: "old password is incorrect",
+      error: signInError.message
     });
   }
 
@@ -165,7 +167,10 @@ router.post('/logout', async(req,res) =>{
     password
   });
 
-  if(loginError) res.status(401).json({error: "invalid credentials"})
+  if(loginError) res.status(401).json({
+    message: "invalid credentials",
+    error: loginError.message
+  })
 
   const{error} = await supabase.auth.signOut();
 
