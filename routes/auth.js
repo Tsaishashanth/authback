@@ -166,7 +166,7 @@ router.post('/logout', async(req,res) =>{
     email,
     password
   });
-
+  
   if(loginError) res.status(401).json({
     message: "invalid credentials",
     error: loginError.message
