@@ -151,7 +151,7 @@ router.get('/productsbycategory', async(req, res) =>{
     if(productsError){
         return res.status(400).json({
             message:'unsuccesfull',
-            error: productError.message,
+            error: productsError.message,
             success:false
         });
     }
