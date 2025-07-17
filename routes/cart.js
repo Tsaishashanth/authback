@@ -30,7 +30,7 @@ router.post('/addtocart', async(req,res) => {
         product_id:productid,
         user_id: userid,
         quantity: quantity
-    }]);
+    }]).select();
 
     if(cartError){
         return res.status(400).json({
