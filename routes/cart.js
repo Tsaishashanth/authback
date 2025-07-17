@@ -1,6 +1,6 @@
 const supabase = require('../supabase');
 const express = require ('express');
-const router = express.Router;
+const router = express.Router();
 
 router.post('/addtocart', async(req,res) => {
     
