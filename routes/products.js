@@ -70,7 +70,7 @@ router.post('/createproduct',async(req,res) => {
 
     res.json({
         message:"products created succesfully",
-        products:   data,
+        products:data,
         success: true
     });
 

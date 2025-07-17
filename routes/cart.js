@@ -27,7 +27,7 @@ router.post('/addtocart', async(req,res) => {
     }
 
     const{data:entrydata, error:cartError} = await supabase.from('carttable').insert([{
-        product_id: reqid,
+        product_id:productid,
         user_id: userid,
         quantity: quantity
     }]);
@@ -35,7 +35,7 @@ router.post('/addtocart', async(req,res) => {
     if(cartError){
         return res.status(400).json({
             message: 'error adding to cart',
-            error:carterror.message,
+            error:cartError.message,
             success:false
         });
     }
