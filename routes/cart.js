@@ -2,6 +2,7 @@ const supabase = require('../supabase');
 const express = require ('express');
 const router = express.Router();
 
+// add to cart
 router.post('/addtocart', async(req,res) => {
     
 
@@ -12,10 +13,10 @@ router.post('/addtocart', async(req,res) => {
         });
     }
 
-    const {reqid , userid, quantity} = req.body;
+    const {productid , userid, quantity} = req.body;
     
 
-    const{data: datacheck, error:checkingerror} = await supabase.from('productstable').select('id').eq('id', reqid).single();
+    const{data: datacheck, error:checkingerror} = await supabase.from('productstable').select('id').eq('id', productid).single();
 
     if(checkingerror) {
         return res.status(400).json({

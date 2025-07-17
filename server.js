@@ -15,7 +15,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 // app.use('/api/user', userRoutes);
 app.use('/api/products', productRoutes);
-app.use('./api/cart', cartRoutes );
+app.use('/api/cart', cartRoutes );
 
 //starting the server
 app.get('/', (req, res) => {

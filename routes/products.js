@@ -127,7 +127,7 @@ router.put('/updateproduct', async (req, res) => {
 
 // get products by catogery name
 
-router.get('/productsbycatogery', async(req, res) =>{
+router.get('/productsbycategory', async(req, res) =>{
     //get products may not require token
 
 
