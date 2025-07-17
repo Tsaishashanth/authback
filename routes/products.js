@@ -58,7 +58,7 @@ router.post('/createproduct',async(req,res) => {
             image,
             description
         },
-    ])
+    ]).select();
     
     if(tableerror){
         return res.status(500).json({
@@ -111,7 +111,8 @@ router.put('/updateproduct', async (req, res) => {
   const { data: newdata, error: reserror } = await supabase
     .from('productstable')
     .update(updateddata)
-    .eq('id', id);
+    .eq('id', id)
+    .select();
 
   if (reserror) {
     return res.status(500).json({
