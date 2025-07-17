@@ -51,7 +51,7 @@ router.post('/addtocart', async(req,res) => {
 
 router.delete('/deletefromcart', async(req,res) => {
 
-    const{product_id, user_id} = req.body;
+    const{productid, userid} = req.body;
 
     if(!req.body) {
         return res.status(400).json({
