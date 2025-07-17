@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
-const supabase = require('supabase')
+const supabase = require('../supabase')
 
 
 //sign up
