@@ -25,13 +25,13 @@ router.post('/addtocart', async(req,res) => {
         });
     }
 
-    const{data:entrydata, error:Error} = await supabase.from('carttable').insert([{
+    const{data:entrydata, error:cartError} = await supabase.from('carttable').insert([{
         product_id: reqid,
         user_id: userid,
         quantity: quantity
     }]);
 
-    if(Error){
+    if(cartError){
         return res.status(400).json({
             message: 'error adding to cart',
             success:false
@@ -58,9 +58,9 @@ router.delete('/deletefromcart', async(req,res) => {
         });
     }
 
-    const{data, error:Error} = await supabase.from('carttable').delete().eq('product_id',product_id, ).eq('user_id',user_id);
+    const{data, error:deleteError} = await supabase.from('carttable').delete().eq('product_id',product_id, ).eq('user_id',user_id);
 
-    if(Error) {
+    if(deleteError) {
         return res.status(400).json({
             message: 'error deleting product from cart',
             success:false

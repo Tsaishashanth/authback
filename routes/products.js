@@ -38,9 +38,9 @@ router.post('/createproduct',async(req,res) => {
         })
     }
 
-    const {data:user, error:Error} = await supabase.auth.getUser(token);
+    const {data:user, error:userError} = await supabase.auth.getUser(token);
 
-    if(Error) {
+    if(userError) {
         return res.status(401).json({
             message: 'invalid user',
             success:false
@@ -59,7 +59,7 @@ router.post('/createproduct',async(req,res) => {
         },
     ])
     
-    if(Error){
+    if(tableerror){
         return res.status(500).json({
             message: 'invalid details',
             success:false
@@ -143,9 +143,9 @@ router.get('/productsbycategory', async(req, res) =>{
     // const search = {};
     // if(catogery) search.name = catogery;
 
-    const{data, error:Error} = await supabase.from('productstable').select('*').eq('name', category);
+    const{data, error:productsError} = await supabase.from('productstable').select('*').eq('name', category);
 
-    if(Error){
+    if(productsError){
         return res.status(400).json({
             message:'unsuccesfull',
             success:false
