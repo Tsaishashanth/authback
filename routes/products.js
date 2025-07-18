@@ -48,7 +48,7 @@ router.post('/createproduct',async(req,res) => {
         })
     }
 
-    const {id, name, price ,image, description} = req.body;
+    const {id, name, price ,image, description, category} = req.body;
 
     const{data, error: tableerror} = await supabase.from('productstable').insert([
         {
@@ -56,7 +56,8 @@ router.post('/createproduct',async(req,res) => {
             name,
             price,
             image,
-            description
+            description,
+            category
         },
     ]).select();
     
@@ -147,7 +148,7 @@ router.get('/productsbycategory', async(req, res) =>{
     // const search = {};
     // if(catogery) search.name = catogery;
 
-    const{data, error:productsError} = await supabase.from('productstable').select('*').eq('name', category);
+    const{data, error:productsError} = await supabase.from('productstable').select('*').eq('category', category);
 
     if(productsError){
         return res.status(400).json({

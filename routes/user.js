@@ -106,3 +106,79 @@ router.put('/updateuser', async (req,res) => {
     success:true
   });
 });
+
+
+// add to cart
+router.post('/addtocart', async(req,res) => {
+    
+
+    if(!req.body) {
+        return res.status(400).json({
+            message:'error fetching body request',
+            success:false
+        });
+    }
+
+    const {productid , quantity} = req.body;
+    
+
+    const{data: datacheck, error:checkingerror} = await supabase.from('productstable').select('id').eq('id', productid).single();
+
+    if(checkingerror) {
+        return res.status(400).json({
+            messsage: 'product not found',
+            error: checkingerror.message,
+            success: false
+        });
+    }
+
+    const{data:entrydata, error:cartError} = await supabase.from('carttable').insert([{
+        product_id:productid,
+        // user_id: userid,
+        quantity: quantity
+    }]).select();
+
+    if(cartError){
+        return res.status(400).json({
+            message: 'error adding to cart',
+            error:cartError.message,
+            success:false
+        });
+    }
+
+    res.json({
+        message:'added products to cart',
+        dataadded: entrydata,
+        success:true
+    });
+});
+
+// deletefrom cart
+
+router.delete('/deletefromcart', async(req,res) => {
+
+    const{productid} = req.body;
+
+    if(!req.body) {
+        return res.status(400).json({
+            message: 'error fecting from body',
+            success: false
+        });
+    }
+
+    const{data, error:deleteError} = await supabase.from('carttable').delete().eq('product_id',productid);
+
+    if(deleteError) {
+        return res.status(400).json({
+            message: 'error deleting product from cart',
+            error: deleteError.message,
+            success:false
+        });
+    }
+
+    res.json({
+        message:'product deleted succesfull from cart',
+        success:true
+    });
+
+});
