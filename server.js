@@ -5,6 +5,9 @@ const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const userRoutes = require('./routes/user');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+
 // const cartRoutes = require('./routes/cart');
 
 dotenv.config();
@@ -21,6 +24,22 @@ app.use('/api/products', productRoutes);
 app.get('/', (req, res) => {
   res.send('Server is running!');
 });
+
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Auth API',
+      version: '1.0.0',
+      description: 'API for signup, login, and auth',
+    },
+  },
+  apis: ['./index.js'], // change this if your routes are in another file
+};
+
+const specs = swaggerJsdoc(options);
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(specs));
+
 
 
 const PORT = process.env.PORT || 5000;

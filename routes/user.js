@@ -153,7 +153,7 @@ router.post('/addtocart', async(req,res) => {
     });
 });
 
-// deletefrom cart
+// deletefrom cart  
 
 router.delete('/deletefromcart', async(req,res) => {
 

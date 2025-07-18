@@ -5,6 +5,30 @@ const supabase = require('../supabase')
 
 
 //sign up
+
+/**
+ * @swagger
+ * /signup:
+ *   post:
+ *     summary: Signup user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User signed up successfully
+ */
+
+
+
 router.post('/signup', async (req, res) => {
     const {email, password, username} = req.body;
     const{data,error} = await supabase.auth.signUp({
