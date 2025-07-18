@@ -166,7 +166,7 @@ router.delete('/deletefromcart', async(req,res) => {
         });
     }
 
-    const{data, error:deleteError} = await supabase.from('carttable').delete().eq('product_id',productid);
+    const{data, error:deleteError} = await supabase.from('carttable').delete().eq('product_id',productid).select();
 
     if(deleteError) {
         return res.status(400).json({
