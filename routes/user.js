@@ -157,7 +157,7 @@ router.post('/addtocart', async(req,res) => {
 
 router.delete('/deletefromcart', async(req,res) => {
 
-    const{productid} = req.body;
+    const{productid} = req.body;  
 
     if(!req.body) {
         return res.status(400).json({
@@ -176,6 +176,12 @@ router.delete('/deletefromcart', async(req,res) => {
         });
     }
 
+    if(data.length === 0) {
+        return res.status(404).json({
+            message: 'No product found with that ID in the cart',
+            success: false
+        });
+    }
     res.json({
         message:'product deleted succesfull from cart',
         success:true
