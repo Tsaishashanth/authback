@@ -34,7 +34,7 @@ const options = {
       description: 'API for signup, login, and auth',
     },
   },
-  apis: ['./routes.js'], // change this if your routes are in another file
+  apis: ['./routes/*.js'], // change this if your routes are in another file
 };
 
 const specs = swaggerJsdoc(options);
