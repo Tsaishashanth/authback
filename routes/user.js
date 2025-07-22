@@ -185,6 +185,26 @@ router.delete('/deletefromcart', async(req,res) => {
     res.json({
         message:'product deleted succesfull from cart',
         success:true
-    });
+    }); 
 
+});
+
+// get all cartproducts
+router.get('/allcartproducts',async (req, res) => {
+
+  const{data, error:dataerror} = await supabase.from('carttable').select('*');
+  
+  if(dataerror) {
+    return res.status(400).json({
+      message:'cannot retrieve data from the table',
+      Error:dataerror.message,
+      success:false
+    });
+  }
+
+  res.json({
+    message:'all products from the cart',
+    data:data,
+    success: true
+  });
 });
