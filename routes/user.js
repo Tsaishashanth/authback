@@ -40,6 +40,47 @@ const supabase = require('../supabase');
 
 module.exports = router;
 
+//userdetails swagger
+/**
+ * @swagger
+ * /userdetails:
+ *   get:
+ *     tags:
+ *       - User Routes
+ *     summary: Get user details
+ *     description: Returns the authenticated user's details using the bearer token.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User details retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: user details
+ *                 username:
+ *                   type: string
+ *                   example: shashanth123
+ *                 email:
+ *                   type: string
+ *                   example: user@example.com
+ *                 accessToken:
+ *                   type: string
+ *                   example: clv_1TSTSSiDCAJ12FQ48D0KgBW
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       401:
+ *         description: Token missing or invalid
+ *       500:
+ *         description: Internal server error
+ */
+
+
 
 //updateuser
 
@@ -107,6 +148,69 @@ router.put('/updateuser', async (req,res) => {
   });
 });
 
+// updateuser swagger
+/**
+ * @swagger
+ * /updateuser:
+ *   put:
+ *     tags:
+ *       - User Routes
+ *     summary: Update user details
+ *     description: Updates the user's username and/or password. Requires old password for verification.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - oldpassword
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@example.com
+ *               oldpassword:
+ *                 type: string
+ *                 example: oldPassword123
+ *               newpassword:
+ *                 type: string
+ *                 example: newSecurePassword456
+ *               newusername:
+ *                 type: string
+ *                 example: newUsername123
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: username and password updated successfully
+ *                 username:
+ *                   type: string
+ *                   example: newUsername123
+ *                 email:
+ *                   type: string
+ *                   example: user@example.com
+ *                 accessToken:
+ *                   type: string
+ *                   example: clv_1TSTSSiDCAJ12FQ48D0KgBW
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       401:
+ *         description: Unauthorized or invalid old password
+ *       400:
+ *         description: Bad request or update failed
+ */
+
+
 
 // add to cart
 router.post('/addtocart', async(req,res) => {
@@ -153,6 +257,57 @@ router.post('/addtocart', async(req,res) => {
     });
 });
 
+// add to cart swagger
+/**
+ * @swagger
+ * /addtocart:
+ *   post:
+ *     tags:
+ *       - Cart Routes
+ *     summary: Add a product to the cart
+ *     description: Adds a product to the cart by product ID and quantity. Validates that the product exists.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - productid
+ *               - quantity
+ *             properties:
+ *               productid:
+ *                 type: string
+ *                 example: "prod123"
+ *                 description: ID of the product to add
+ *               quantity:
+ *                 type: integer
+ *                 example: 2
+ *                 description: Quantity of the product to add
+ *     responses:
+ *       200:
+ *         description: Product added to cart successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: added products to cart
+ *                 dataadded:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       400:
+ *         description: Error fetching request body, product not found, or insert failed
+ */
+
+
+
 // deletefrom cart  
 
 router.delete('/deletefromcart', async(req,res) => {
@@ -189,6 +344,49 @@ router.delete('/deletefromcart', async(req,res) => {
 
 });
 
+// delete from cart swagger
+/**
+/**
+ * @swagger
+ * /deletefromcart:
+ *   delete:
+ *     tags:
+ *       - Cart Routes
+ *     summary: Delete a product from the cart
+ *     description: Deletes a product from the cart using the product ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - productid
+ *             properties:
+ *               productid:
+ *                 type: string
+ *                 example: "prod123"
+ *                 description: ID of the product to be removed from the cart
+ *     responses:
+ *       200:
+ *         description: Product deleted successfully from the cart
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: product deleted succesfull from cart
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       400:
+ *         description: Error deleting product or invalid request body
+ *       404:
+ *         description: No product found with that ID in the cart
+ */
+
 // get all cartproducts
 router.get('/allcartproducts',async (req, res) => {
 
@@ -208,3 +406,41 @@ router.get('/allcartproducts',async (req, res) => {
     success: true
   });
 });
+
+// get all cart products swagger
+/**
+ * @swagger
+ * /allcartproducts:
+ *   get:
+ *     tags:
+ *       - Cart Routes
+ *     summary: Get all products in the cart
+ *     description: Retrieves all products stored in the cart table.
+ *     responses:
+ *       200:
+ *         description: All products fetched successfully from the cart
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: all products from the cart
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       product_id:
+ *                         type: string
+ *                         example: prod123
+ *                       quantity:
+ *                         type: integer
+ *                         example: 2
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       400:
+ *         description: Failed to retrieve data from the table
+ */

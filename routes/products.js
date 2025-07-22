@@ -25,6 +25,57 @@ router.get('/getallproducts',async(req,res)=> {
 
 module.exports =  router;
 
+// get all products swagger
+/**
+ * @swagger
+ * /getallproducts:
+ *   get:
+ *     tags:
+ *       - Product Routes
+ *     summary: Get all products
+ *     description: Fetches all products from the productstable.
+ *     responses:
+ *       200:
+ *         description: Products retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         example: "prod123"
+ *                       name:
+ *                         type: string
+ *                         example: Helmet
+ *                       price:
+ *                         type: number
+ *                         example: 1999
+ *                       image:
+ *                         type: string
+ *                         example: "https://example.com/image.jpg"
+ *                       description:
+ *                         type: string
+ *                         example: "Premium motorcycle helmet"
+ *                       category:
+ *                         type: string
+ *                         example: "Accessories"
+ *                 message:
+ *                   type: string
+ *                   example: data retrieved from the table
+ *                 sucess:
+ *                   type: boolean
+ *                   example: true
+ *       500:
+ *         description: Failed to fetch table details
+ */
+
+
 // create product
 
 router.post('/createproduct',async(req,res) => {
@@ -76,8 +127,74 @@ router.post('/createproduct',async(req,res) => {
     });
 
 });
+//create product swagger
+/**
+ * @swagger
+ * /createproduct:
+ *   post:
+ *     tags:
+ *       - Product Routes
+ *     summary: Create a new product
+ *     description: Adds a new product to the productstable. Requires a valid user token in the Authorization header.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *               - name
+ *               - price
+ *               - image
+ *               - description
+ *               - category
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 example: "prod123"
+ *               name:
+ *                 type: string
+ *                 example: "Helmet"
+ *               price:
+ *                 type: number
+ *                 example: 1999
+ *               image:
+ *                 type: string
+ *                 example: "https://example.com/image.jpg"
+ *               description:
+ *                 type: string
+ *                 example: "Premium motorcycle helmet"
+ *               category:
+ *                 type: string
+ *                 example: "Accessories"
+ *     responses:
+ *       200:
+ *         description: Product created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: products created successfully
+ *                 products:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       400:
+ *         description: Token is missing or invalid
+ *       500:
+ *         description: Invalid product details or insertion failed
+ */
 
-// module.exports = router; once is enough 
+
 
 // update product
 
@@ -130,6 +247,66 @@ router.put('/updateproduct', async (req, res) => {
   });
 });
 
+// update products swagger
+/**
+ * @swagger
+ * /updateproduct:
+ *   put:
+ *     tags:
+ *       - Product Routes
+ *     summary: Update a product
+ *     description: Updates an existing product's name, price, image, or description. Requires a valid token.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 example: "prod123"
+ *               newname:
+ *                 type: string
+ *                 example: "Updated Helmet"
+ *               newprice:
+ *                 type: number
+ *                 example: 1499
+ *               newimage:
+ *                 type: string
+ *                 example: "https://example.com/new-image.jpg"
+ *               newdescription:
+ *                 type: string
+ *                 example: "Updated premium helmet with more comfort"
+ *     responses:
+ *       200:
+ *         description: Product updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Product updated successfully
+ *                 updated:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       400:
+ *         description: Token missing or invalid user
+ *       500:
+ *         description: Failed to update product
+ */
+
+
 // get products by catogery name
 
 router.get('/productsbycategory', async(req, res) =>{
@@ -165,6 +342,51 @@ router.get('/productsbycategory', async(req, res) =>{
     })
 });
 
+// get product by category swagger
+/**
+ * @swagger
+ * /productsbycategory:
+ *   get:
+ *     tags:
+ *       - Product Routes
+ *     summary: Get products by category
+ *     description: Fetches all products matching a specific category from the database.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - category
+ *             properties:
+ *               category:
+ *                 type: string
+ *                 example: Accessories
+ *     responses:
+ *       200:
+ *         description: Products fetched successfully by category
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: fetched data according to category
+ *                 details:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       400:
+ *         description: Request body missing or error while fetching
+ */
+
+
+
 // delete product
 
 router.delete('/deleteproduct', async(req, res) => {
@@ -195,3 +417,42 @@ router.delete('/deleteproduct', async(req, res) => {
     });
 
 });
+
+// delete a produt swagger
+/**
+ * @swagger
+ * /deleteproduct:
+ *   delete:
+ *     tags:
+ *       - Product Routes
+ *     summary: Delete a product
+ *     description: Deletes a product from the database by its ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 example: "prod123"
+ *     responses:
+ *       200:
+ *         description: Product deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: product deleted successfully
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *       400:
+ *         description: Request missing or product not deleted
+ */
