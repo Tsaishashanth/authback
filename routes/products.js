@@ -28,7 +28,7 @@ module.exports =  router;
 // get all products swagger
 /**
  * @swagger
- * /getallproducts:
+ * https://authback-slfs.onrender.com/api/products/getallproducts:
  *   get:
  *     tags:
  *       - Product Routes
@@ -130,7 +130,7 @@ router.post('/createproduct',async(req,res) => {
 //create product swagger
 /**
  * @swagger
- * /createproduct:
+ * https://authback-slfs.onrender.com/api/products/createproduct:
  *   post:
  *     tags:
  *       - Product Routes
@@ -250,7 +250,7 @@ router.put('/updateproduct', async (req, res) => {
 // update products swagger
 /**
  * @swagger
- * /updateproduct:
+ * https://authback-slfs.onrender.com/api/products/updateproduct:
  *   put:
  *     tags:
  *       - Product Routes
@@ -345,7 +345,7 @@ router.get('/productsbycategory', async(req, res) =>{
 // get product by category swagger
 /**
  * @swagger
- * /productsbycategory:
+ * https://authback-slfs.onrender.com/api/products/productsbycategory:
  *   get:
  *     tags:
  *       - Product Routes
@@ -421,7 +421,7 @@ router.delete('/deleteproduct', async(req, res) => {
 // delete a produt swagger
 /**
  * @swagger
- * /deleteproduct:
+ * https://authback-slfs.onrender.com/api/products/deleteproduct:
  *   delete:
  *     tags:
  *       - Product Routes

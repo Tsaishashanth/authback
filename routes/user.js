@@ -43,7 +43,7 @@ module.exports = router;
 //userdetails swagger
 /**
  * @swagger
- * /userdetails:
+ * https://authback-slfs.onrender.com/api/user/userdetails:
  *   get:
  *     tags:
  *       - User Routes
@@ -151,7 +151,7 @@ router.put('/updateuser', async (req,res) => {
 // updateuser swagger
 /**
  * @swagger
- * /updateuser:
+ * https://authback-slfs.onrender.com/api/user/updateuser:
  *   put:
  *     tags:
  *       - User Routes
@@ -260,7 +260,7 @@ router.post('/addtocart', async(req,res) => {
 // add to cart swagger
 /**
  * @swagger
- * /addtocart:
+ * https://authback-slfs.onrender.com/api/user/addtocart:
  *   post:
  *     tags:
  *       - Cart Routes
@@ -348,7 +348,7 @@ router.delete('/deletefromcart', async(req,res) => {
 /**
 /**
  * @swagger
- * /deletefromcart:
+ * https://authback-slfs.onrender.com/api/user/deletefromcart:
  *   delete:
  *     tags:
  *       - Cart Routes
@@ -410,7 +410,7 @@ router.get('/allcartproducts',async (req, res) => {
 // get all cart products swagger
 /**
  * @swagger
- * /allcartproducts:
+ * https://authback-slfs.onrender.com/api/user/allcartproducts:
  *   get:
  *     tags:
  *       - Cart Routes

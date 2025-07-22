@@ -9,7 +9,7 @@ const supabase = require('../supabase')
 
 /**
  * @swagger
- * /signup:
+ * https://authback-slfs.onrender.com/api/auth/signup:
  *   post:
  *     tags:
  *       - Auth Routes
@@ -93,7 +93,7 @@ router.post('/signup', async (req, res) => {
 
 /**
  * @swagger
- * /login:
+ * https://authback-slfs.onrender.com/api/auth/login:
  *   post:
  *     tags:
  *       - Auth Routes
@@ -159,7 +159,7 @@ router.post('/login', async (req, res) => {
 
 /**
  * @swagger
- * /logout:
+ * https://authback-slfs.onrender.com/api/auth/logout:
  *   post:
  *     tags:
  *       - Auth Routes
