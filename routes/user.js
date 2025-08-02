@@ -213,49 +213,90 @@ router.put('/updateuser', async (req,res) => {
 
 
 // add to cart
-router.post('/addtocart', async(req,res) => {
-    
-
-    if(!req.body) {
-        return res.status(400).json({
-            message:'error fetching body request',
-            success:false
-        });
-    }
-
-    const {productid , quantity} = req.body;
-    
-
-    const{data: datacheck, error:checkingerror} = await supabase.from('productstable').select('id').eq('id', productid).single();
-
-    if(checkingerror) {
-        return res.status(400).json({
-            messsage: 'product not found',
-            error: checkingerror.message,
-            success: false
-        });
-    }
-
-    const{data:entrydata, error:cartError} = await supabase.from('carttable').insert([{
-        product_id:productid,
-        // user_id: userid,
-        quantity: quantity
-    }]).select();
-
-    if(cartError){
-        return res.status(400).json({
-            message: 'error adding to cart',
-            error:cartError.message,
-            success:false
-        });
-    }
-
-    res.json({
-        message:'added products to cart',
-        dataadded: entrydata,
-        success:true
+router.post('/addtocart', async (req, res) => {
+  if (!req.body) {
+    return res.status(400).json({
+      message: 'error fetching body request',
+      success: false,
     });
+  }
+
+  const { productid } = req.body;
+
+  // Step 1: Check if product exists in productstable
+  const { data: datacheck, error: checkingerror } = await supabase
+    .from('productstable')
+    .select('id')
+    .eq('id', productid)
+    .single();
+
+  if (checkingerror) {
+    return res.status(400).json({
+      message: 'product not found',
+      error: checkingerror.message,
+      success: false,
+    });
+  }
+
+  // Step 2: Check if the product is already in the cart
+  const { data: existingProduct, error: checkError } = await supabase
+    .from('carttable')
+    .select('*')
+    .eq('product_id', productid)
+    .maybeSingle();
+
+  if (checkError) {
+    return res.status(400).json({
+      message: 'error checking cart',
+      error: checkError.message,
+      success: false,
+    });
+  }
+
+  // Step 3A: If it exists, increase quantity by 1
+  if (existingProduct) {
+    const { data: updatedCart, error: updateError } = await supabase
+      .from('carttable')
+      .update({ quantity: existingProduct.quantity + 1 })
+      .eq('id', existingProduct.id)
+      .select();
+
+    if (updateError) {
+      return res.status(400).json({
+        message: 'error updating quantity',
+        error: updateError.message,
+        success: false,
+      });
+    }
+
+    return res.json({
+      message: 'quantity updated in cart',
+      data: updatedCart,
+      success: true,
+    });
+  }
+
+  // Step 3B: If not exists, insert with quantity = 1
+  const { data: newEntry, error: insertError } = await supabase
+    .from('carttable')
+    .insert([{ product_id: productid, quantity: 1 }])
+    .select();
+
+  if (insertError) {
+    return res.status(400).json({
+      message: 'error adding new product to cart',
+      error: insertError.message,
+      success: false,
+    });
+  }
+
+  res.json({
+    message: 'product added to cart with quantity 1',
+    data: newEntry,
+    success: true,
+  });
 });
+
 
 // add to cart swagger
 /**
