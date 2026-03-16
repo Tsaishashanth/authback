@@ -28,28 +28,44 @@ A **JWT-based authentication backend** built with **Node.js, Express, and MongoD
 
 ## 📂 Project Structure
 ```
-authback/ │── models/          # Mongoose models (User schema, etc.) │── routes/          # Express routes (auth, protected, cart, etc.) │── node_modules/    # Dependencies │── server.js        # Entry point of the application │── swagger.js       # Swagger configuration │── supabase.js      # Supabase client setup │── .env             # Environment variables │── package.json     # Project metadata & dependencies │── README.md        # Documentation
+authback/
+│── models/          # Mongoose models (User schema, etc.)
+│── routes/          # Express routes (auth, protected, cart, etc.)
+│── node_modules/    # Dependencies
+│── server.js        # Entry point of the application
+│── swagger.js       # Swagger configuration
+│── supabase.js      # Supabase client setup
+│── .env             # Environment variables
+│── package.json     # Project metadata & dependencies
+│── README.md        # Documentation
+
 ```
-
-
 ---
 
 ## 🔑 API Endpoints
 
 ### Auth Routes
-| Method | Endpoint              | Description            |
-|--------|-----------------------|------------------------|
-| POST   | `/api/auth/register`  | Register a new user    |
-| POST   | `/api/auth/login`     | Login user             |
-| POST   | `/api/auth/refresh`   | Refresh access token   |
+| Method | Endpoint              | Description             |
+|--------|-----------------------|-------------------------|
+| POST   | `/api/auth/signup`    | Register a new user     |
+| POST   | `/api/auth/login`     | Login user              |
+| POST   | `/api/auth/logout`    | Logout user             |
 
-### Protected Routes
-| Method | Endpoint              | Description            |
-|--------|-----------------------|------------------------|
-| GET    | `/api/protected`      | Example protected route |
+### User Routes (Protected)
+| Method | Endpoint                  | Description             |
+|--------|---------------------------|-------------------------|
+| GET    | `/api/user/userdetails`   | Get logged-in user info |
+| PUT    | `/api/user/updateuser`    | Update user profile     |
+
+### Product Routes
+| Method | Endpoint                        | Description                  |
+|--------|---------------------------------|------------------------------|
+| GET    | `/api/getallproducts`           | List all products            |
+| GET    | `/api/productsbycategory`       | Get product details          |
+| POST   | `/api/createproduct`            | Add new product (admin only) |
+| DELETE | `/api/deleteproduct`            | Delete product (admin only)  |
 
 ---
-
 ## ⚙️ Installation & Setup
 
 1. **Clone the repo**
